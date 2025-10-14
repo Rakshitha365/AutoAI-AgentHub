@@ -1,8 +1,8 @@
-# 🤖 AutoAI Agent Framework
+# 🤖 AutoAI AgentHub
 **An intelligent multi-agent automation system for AI application development.**
 
 ## Overview
-The **AutoAI Agent Framework** is a prototype that automates the **entire machine learning pipeline** — from data preprocessing to model training and deployment — using **specialized AI agents**.  
+The **AutoAI AgentHub** is a prototype that automates the **entire machine learning pipeline** — from data preprocessing to model training and deployment — using **specialized AI agents**.  
 
 Instead of manually handling each stage, this system allows users to simply upload a dataset and define the task type (classification or regression). The agents then work collaboratively to build, train, and deploy a working ML model automatically.
 
