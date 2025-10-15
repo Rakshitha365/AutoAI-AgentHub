@@ -1,0 +1,30 @@
+{
+  "artifact_dir": "artifacts",
+  "models_dir": "artifacts/models",
+  "logs_dir": "artifacts/logs",
+  "reports_dir": "artifacts/reports",
+  "max_file_size_mb": 10,
+  "default_test_size": 0.2,
+  "random_state": 42,
+  "max_categorical_cardinality": 50,
+  "streamlit_port": 8501,
+  "log_level": "INFO",
+  "model_trials": {
+    "classification": [
+      "LogisticRegression",
+      "DecisionTreeClassifier",
+      "RandomForestClassifier"
+    ],
+    "regression": [
+      "LinearRegression",
+      "Ridge",
+      "RandomForestRegressor"
+    ]
+  },
+  "performance_thresholds": {
+    "max_training_time_seconds": 30,
+    "min_accuracy_classification": 0.7,
+    "max_rmse_regression": 1.0,
+    "min_r2_score": 0.5
+  }
+}
