@@ -74,9 +74,9 @@ The framework consists of three specialized agents:
    python main.py --dataset your_data.csv --target target_column
    ```
    
-   **Option C: Demo with sample data**
+   **Option C: Launch web interface**
    ```bash
-   python main.py --demo
+   python main.py --web
    ```
 
 ### Usage

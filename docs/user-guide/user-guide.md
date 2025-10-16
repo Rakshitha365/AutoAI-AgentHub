@@ -73,10 +73,10 @@ AutoAI AgentHub is a multi-agent system that automates machine learning workflow
 After installation, test with sample data:
 
 ```bash
-python main.py --demo
+python main.py --web
 ```
 
-This will run a demonstration with sample data to verify everything works correctly.
+This will launch the web interface where you can upload your own data and run the pipeline interactively.
 
 ## Quick Start
 
@@ -202,11 +202,6 @@ python main.py --dataset data.csv --target target --task classification
 #### Launch Web Interface
 ```bash
 python main.py --web
-```
-
-#### Run Demo
-```bash
-python main.py --demo
 ```
 
 ### Advanced Options
@@ -539,7 +534,7 @@ print(f"Prediction: {predictions['prediction']}")
 
 #### Self-Help Resources
 1. **Check Documentation**: Review this user guide
-2. **Run Diagnostics**: Use `python main.py --demo` to test system
+2. **Run Diagnostics**: Use `python main.py --web` to test system
 3. **Check Logs**: Review log files in `artifacts/logs/`
 4. **Validate Data**: Ensure data meets requirements
 

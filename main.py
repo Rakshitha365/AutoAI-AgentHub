@@ -66,11 +66,6 @@ Examples:
         action="store_true",
         help="Launch Streamlit web interface"
     )
-    parser.add_argument(
-        "--demo",
-        action="store_true",
-        help="Run demo with sample data"
-    )
     
     args = parser.parse_args()
     
@@ -79,20 +74,15 @@ Examples:
         launch_web_interface()
         return
     
-    # Run demo if requested
-    if args.demo:
-        run_demo()
-        return
-    
     # Validate required arguments for CLI mode
     if not args.dataset:
-        print("❌ Error: --dataset is required for CLI mode")
-        print("Use --web to launch the web interface or --demo to run a demo")
+        print("Error: --dataset is required for CLI mode")
+        print("Use --web to launch the web interface")
         sys.exit(1)
     
     # Validate configuration file
     if not os.path.exists(args.config):
-        print(f"❌ Error: Configuration file not found at {args.config}")
+        print(f"Error: Configuration file not found at {args.config}")
         sys.exit(1)
     
     # Load configuration
@@ -100,7 +90,7 @@ Examples:
         with open(args.config, 'r') as f:
             config = json.load(f)
     except Exception as e:
-        print(f"❌ Error loading configuration: {e}")
+        print(f"Error loading configuration: {e}")
         sys.exit(1)
     
     # Update configuration with command line arguments
@@ -113,17 +103,17 @@ Examples:
     try:
         orchestrator = Orchestrator(args.config)
     except Exception as e:
-        print(f"❌ Error initializing orchestrator: {e}")
+        print(f"Error initializing orchestrator: {e}")
         sys.exit(1)
     
     # Run pipeline
-    print("🤖 AutoAI AgentHub - Starting Pipeline")
+    print("AutoAI AgentHub - Starting Pipeline")
     print("=" * 50)
-    print(f"📁 Dataset: {args.dataset}")
+    print(f"Dataset: {args.dataset}")
     if args.target:
-        print(f"🎯 Target: {args.target}")
+        print(f"Target: {args.target}")
     if args.task:
-        print(f"📊 Task: {args.task}")
+        print(f"Task: {args.task}")
     print("=" * 50)
     
     try:
@@ -134,62 +124,62 @@ Examples:
         )
         
         if result["success"]:
-            print("\n✅ Pipeline completed successfully!")
-            print(f"🆔 Run ID: {result['run_id']}")
-            print(f"🤖 Model: {result['model_artifact'].model_type}")
-            print(f"📊 Task: {result['model_artifact'].task_type}")
-            print(f"🎯 Target: {result['model_artifact'].target_column}")
+            print("\nPipeline completed successfully!")
+            print(f"Run ID: {result['run_id']}")
+            print(f"Model: {result['model_artifact'].model_type}")
+            print(f"Task: {result['model_artifact'].task_type}")
+            print(f"Target: {result['model_artifact'].target_column}")
             
             # Display metrics
-            print("\n📈 Performance Metrics:")
+            print("\nPerformance Metrics:")
             for metric, value in result['model_artifact'].metrics.items():
                 print(f"  • {metric.replace('_', ' ').title()}: {value:.4f}")
             
             # Display artifacts
-            print("\n📦 Generated Artifacts:")
+            print("\nGenerated Artifacts:")
             for artifact_type, artifact_path in result['artifacts'].items():
                 print(f"  • {artifact_type}: {artifact_path}")
             
             # Display deployment info
-            print(f"\n🚀 Streamlit App: {result['deployment_info'].app_path}")
-            print(f"🌐 Access URL: {result['deployment_info'].app_url}")
+            print(f"\nStreamlit App: {result['deployment_info'].app_path}")
+            print(f"Access URL: {result['deployment_info'].app_url}")
             
             # Ask if user wants to launch the app
             try:
-                launch = input("\n🚀 Do you want to launch the Streamlit app now? (y/n): ").lower()
+                launch = input("\nDo you want to launch the Streamlit app now? (y/n): ").lower()
                 if launch in ['y', 'yes']:
                     launch_streamlit_app(result['deployment_info'].app_path)
             except KeyboardInterrupt:
-                print("\n👋 Goodbye!")
+                print("\nGoodbye!")
         else:
-            print(f"\n❌ Pipeline failed: {result['error']}")
+            print(f"\nPipeline failed: {result['error']}")
             sys.exit(1)
             
     except KeyboardInterrupt:
-        print("\n\n⏹️ Pipeline interrupted by user")
+        print("\n\nPipeline interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Unexpected error: {e}")
+        print(f"\nUnexpected error: {e}")
         sys.exit(1)
 
 
 def launch_web_interface():
     """Launch the Streamlit web interface."""
-    print("🌐 Launching AutoAI Web Interface...")
-    print("📱 The interface will open in your default browser")
-    print("🔗 URL: http://localhost:8501")
-    print("\n⏹️ Press Ctrl+C to stop the server")
+    print("Launching AutoAI Web Interface...")
+    print("The interface will open in your default browser")
+    print("URL: http://localhost:8501")
+    print("\nPress Ctrl+C to stop the server")
     
     try:
         import subprocess
         subprocess.run(["streamlit", "run", "src/streamlit_app.py"], check=True)
     except FileNotFoundError:
-        print("❌ Streamlit not found. Please install with: pip install streamlit")
+        print("Streamlit not found. Please install with: pip install streamlit")
         sys.exit(1)
     except KeyboardInterrupt:
-        print("\n👋 Web interface stopped")
+        print("\nWeb interface stopped")
     except Exception as e:
-        print(f"❌ Error launching web interface: {e}")
+        print(f"Error launching web interface: {e}")
         sys.exit(1)
 
 
@@ -197,75 +187,12 @@ def launch_streamlit_app(app_path: str):
     """Launch a specific Streamlit app."""
     try:
         import subprocess
-        print(f"🚀 Launching Streamlit app: {app_path}")
+        print(f"Launching Streamlit app: {app_path}")
         subprocess.run(["streamlit", "run", app_path], check=True)
     except FileNotFoundError:
-        print("❌ Streamlit not found. Please install with: pip install streamlit")
+        print("Streamlit not found. Please install with: pip install streamlit")
     except Exception as e:
-        print(f"❌ Error launching app: {e}")
-
-
-def run_demo():
-    """Run a demo with sample data."""
-    print("🎬 AutoAI AgentHub - Demo Mode")
-    print("=" * 40)
-    
-    # Create sample data
-    from src.utils.validation import create_sample_data
-    
-    print("📊 Generating sample datasets...")
-    
-    # Classification demo
-    classification_data = create_sample_data(200, 5, 'classification')
-    classification_file = "demo_classification.csv"
-    classification_data.to_csv(classification_file, index=False)
-    
-    # Regression demo
-    regression_data = create_sample_data(200, 5, 'regression')
-    regression_file = "demo_regression.csv"
-    regression_data.to_csv(regression_file, index=False)
-    
-    print(f"✅ Generated {classification_file} and {regression_file}")
-    
-    # Run classification demo
-    print("\n🎯 Running Classification Demo...")
-    try:
-        orchestrator = Orchestrator("src/config/config.json")
-        result = orchestrator.run_pipeline(classification_file, target_col="target")
-        
-        if result["success"]:
-            print(f"✅ Classification demo completed!")
-            print(f"🤖 Model: {result['model_artifact'].model_type}")
-            print(f"📈 Accuracy: {result['model_artifact'].metrics.get('accuracy', 'N/A'):.4f}")
-        else:
-            print(f"❌ Classification demo failed: {result['error']}")
-    except Exception as e:
-        print(f"❌ Classification demo error: {e}")
-    
-    # Run regression demo
-    print("\n📊 Running Regression Demo...")
-    try:
-        result = orchestrator.run_pipeline(regression_file, target_col="target")
-        
-        if result["success"]:
-            print(f"✅ Regression demo completed!")
-            print(f"🤖 Model: {result['model_artifact'].model_type}")
-            print(f"📈 R² Score: {result['model_artifact'].metrics.get('r2_score', 'N/A'):.4f}")
-        else:
-            print(f"❌ Regression demo failed: {result['error']}")
-    except Exception as e:
-        print(f"❌ Regression demo error: {e}")
-    
-    # Cleanup
-    try:
-        os.remove(classification_file)
-        os.remove(regression_file)
-        print(f"\n🧹 Cleaned up demo files")
-    except:
-        pass
-    
-    print("\n🎉 Demo completed!")
-    print("💡 Try the web interface with: python main.py --web")
+        print(f"Error launching app: {e}")
 
 
 if __name__ == "__main__":

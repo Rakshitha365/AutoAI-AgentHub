@@ -88,8 +88,7 @@ def main():
     print("\nDeployment completed successfully!")
     print("\nNext Steps:")
     print("1. Launch web interface: python main.py --web")
-    print("2. Run CLI demo: python main.py --demo")
-    print("3. Upload your own data and generate models")
+    print("2. Upload your own data and generate models")
     print("\nFor help, run: python main.py --help")
 
 
